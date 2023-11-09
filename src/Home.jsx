@@ -20,7 +20,7 @@ export default function Home() {
         <Link to="/routefinder" className="w-full">
           <Button label="กำหนดเส้นทาง" />
         </Link>
-        <Link to="#" className="w-full">
+        <Link to="/favouriteroute" className="w-full">
           <Button label="เส้นทางที่บันทึก" />
         </Link>
         <Link to="#" className="w-full">
