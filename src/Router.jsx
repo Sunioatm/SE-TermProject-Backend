@@ -14,7 +14,7 @@ const router = createBrowserRouter([
     element: <Home />,
   },
   {
-    path: "/rt",
+    path: "/routefinder",
     element: <Routefinder />,
   },
 ]);
