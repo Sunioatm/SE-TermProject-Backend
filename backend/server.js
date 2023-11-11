@@ -4,6 +4,7 @@ const dotenv = require("dotenv")
 dotenv.config()
 const port = process.env.PORT || 3000
 const connectDB = require("./config/database.js")
+const cookieParser = require('cookie-parser');
 
 connectDB.connectDB()
 
@@ -13,7 +14,12 @@ const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cors());
+app.use(cookieParser())
 
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
 
 app.use("/api/users", userRoutes)
 

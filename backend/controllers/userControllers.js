@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/userModel.js");
+const Favourite = require("../models/favouriteModel.js"); // import Favourite model
 
 const userRegister = async (req, res) => {
     try {
@@ -83,13 +84,15 @@ const userLogin = async (req, res) => {
                 }
             );
 
-            res.cookie(token)
-            // user.token = token;
+            // Set token as a cookie in the response
+            res.cookie('token', token, { httpOnly: true, maxAge: 2 * 60 * 60 * 1000 }); // 2 hours in milliseconds
 
             // Do not send back the password
             const userResponse = { ...user.toObject() };
-            delete userResponse.password;
-            delete userResponse.__v; // Remove version key
+
+            // Not sure what this for.
+            // delete userResponse.password;
+            // delete userResponse.__v; // Remove version key
 
             res.status(200).json(userResponse);
 
@@ -102,7 +105,94 @@ const userLogin = async (req, res) => {
     }
 };
 
+const userLogout = async (req, res) => {
+    try {
+        // Clear the authentication cookie
+        res.clearCookie('token');
+        res.status(200).send('User logged out successfully');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal server error');
+    }
+};
+
+
+const addFavorite = async (req, res) => {
+    try {
+        const userId = req.user.user_id; // assuming user_id is stored in req.user
+        const { from, to } = req.body;
+
+        // Create a new favourite item
+        const newFavourite = await Favourite.create({ from, to });
+
+        // Add this new favourite item's ID to the user's favourites
+        await User.findByIdAndUpdate(
+            userId,
+            { $addToSet: { favorites: newFavourite._id } },
+            { new: true, safe: true, upsert: true }
+        );
+
+        res.status(200).send("Favorite added successfully.");
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Internal server error.");
+    }
+};
+
+const listFavorites = async (req, res) => {
+    try {
+        const userId = req.user.user_id;
+
+        const user = await User.findById(userId).populate('favorites');
+        res.status(200).json(user.favorites);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Internal server error.");
+    }
+};
+
+const getFavorite = async (req, res) => {
+    try {
+        const favoriteId = req.params.favoriteId; // Get the favorite ID from the request parameters
+
+        const favorite = await Favourite.findById(favoriteId);
+        if (!favorite) {
+            return res.status(404).send("Favorite not found.");
+        }
+
+        res.status(200).json(favorite);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Internal server error.");
+    }
+};
+
+
+const removeFavorite = async (req, res) => {
+    try {
+        const userId = req.user.user_id;
+        const { itemId } = req.body;
+
+        await User.findByIdAndUpdate(
+            userId,
+            { $pull: { favorites: itemId } },
+            { new: true }
+        );
+
+        res.status(200).send("Item removed from favorites.");
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Internal server error.");
+    }
+};
+
+
 module.exports = {
     userRegister,
     userLogin,
+    userLogout,
+    addFavorite,
+    listFavorites,
+    getFavorite,
+    removeFavorite
 }
