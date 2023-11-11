@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const favouriteSchema = new mongoose.Schema({
+const searchHistorySchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User", // Reference to the User model
@@ -13,8 +13,11 @@ const favouriteSchema = new mongoose.Schema({
     to: {
         type: String,
         required: true
+    },
+    searchedAt: {
+        type: Date,
+        default: Date.now // Automatically set the date when the search is recorded
     }
 });
 
-
-module.exports = mongoose.model("Favourite", favouriteSchema);
+module.exports = mongoose.model("History", searchHistorySchema);

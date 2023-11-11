@@ -9,6 +9,9 @@ const cookieParser = require('cookie-parser');
 connectDB.connectDB()
 
 const userRoutes = require("./routes/userRoutes.js")
+const favouriteRoutes = require("./routes/favouriteRoutes.js")
+const historyRoutes = require("./routes/historyRoutes.js")
+
 
 const app = express()
 app.use(express.json())
@@ -22,6 +25,8 @@ app.use((err, req, res, next) => {
 });
 
 app.use("/api/users", userRoutes)
+app.use("/api/favourite",favouriteRoutes)
+app.use("/api/history",historyRoutes)
 
 app.get("/", (req, res) => {
   res.send("Server is running")
