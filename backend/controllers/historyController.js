@@ -1,5 +1,5 @@
 const User = require("../models/userModel.js");
-const Favourite = require("../models/favouriteModel.js"); // import Favourite model
+const SearchHistory = require("../models/searchHistoryModel.js"); // import Favourite model
 
 const addSearchHistory = async (req, res) => {
     try {
