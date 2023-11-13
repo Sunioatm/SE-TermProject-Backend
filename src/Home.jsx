@@ -17,15 +17,25 @@ export default function Home() {
 
   const handleLogout = async () => {
     try {
-      await axios.post('https://se-term-project.onrender.com/api/users/logout', 
-      {},
-      { withCredentials: true });
+      // Optional: Call the backend to handle server-side logout logic
+      await axios.post('http://localhost:3000/api/users/logout', {}, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+  
+      // Remove the token from localStorage
+      localStorage.removeItem('token');
+  
+      // Navigate to the home page or login page
       navigate('/');
+  
     } catch (error) {
       console.error('Logout failed', error);
       // Handle error appropriately
     }
   };
+  
 
   return (
     <main className={base()}>

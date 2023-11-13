@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { tv } from "tailwind-variants";
 import { Link, useNavigate } from "react-router-dom";
-import { useCookies } from 'react-cookie';
 import axios from "axios";
 import { InputForm } from "./components/InputForm";
 import { Button } from "./components/Button";
@@ -17,37 +16,29 @@ export default function Login() {
   const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  const [, setCookies] = useCookies(['token']);
   const { base, headerText } = LoginPage();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
   
     try {
-      const response = await axios.post('https://se-term-project.onrender.com/api/users/login', {
+      const response = await axios.post('http://localhost:3000/api/users/login', {
         identifier,
         password,
-      }, {
-        headers: {
-          "Content-Type": 'application/json'
-        },
-        withCredentials: true
       });
+
+      // Store the token in localStorage
+      localStorage.setItem('token', response.data.token);
 
       alert('Login successful!');
       navigate('/home');
     } catch (error) {
-      // console.log("identifier : "+identifier)
-      // console.log("password : "+password)
       if (error.response) {
-        // The server responded with a status code outside the 2xx range
         const errorMessage = error.response.data.message || 'An unknown error occurred';
         alert(`Login failed: ${errorMessage}`);
       } else if (error.request) {
-        // The request was made, but no response was received
         alert('Login failed: No response from server');
       } else {
-        // An error occurred in setting up the request
         alert('Login failed: Error in sending request');
       }
     }
@@ -63,15 +54,15 @@ export default function Login() {
               label="หมายเลขโทรศัพท์/อีเมล"
               id="username"
               placeholder="name@email.com"
-              value = {identifier}
-              func = {(e) => setIdentifier(e.target.value)}
+              value={identifier}
+              func={(e) => setIdentifier(e.target.value)}
             />
             <InputForm 
               label="รหัสผ่าน" 
               type="password" 
               id="password"
-              value = {password}
-              func = {(e) => setPassword(e.target.value)} />
+              value={password}
+              func={(e) => setPassword(e.target.value)} />
             <Button label="ลงชื่อเข้าใช้" type="submit" />
           </form>
 

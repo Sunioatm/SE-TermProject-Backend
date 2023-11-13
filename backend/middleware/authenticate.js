@@ -1,8 +1,10 @@
 const jwt = require('jsonwebtoken');
 
 function authenticate(req, res, next) {
-    const token = req.cookies ? req.cookies.token : null;
-    
+    // Token is expected to be in the Authorization header
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1]; // Format: "Bearer TOKEN"
+
     if (!token) {
         return res.status(401).send("Access Denied / Unauthorized request");
     }
@@ -15,6 +17,5 @@ function authenticate(req, res, next) {
         return res.status(400).send("Invalid Token");
     }
 }
-
 
 module.exports = authenticate;

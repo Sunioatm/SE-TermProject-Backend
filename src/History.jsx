@@ -19,17 +19,22 @@ export default function History() {
 
   const fetchHistory = async () => {
     try {
+      const token = localStorage.getItem('token');
       const response = await axios.get(
-        "https://se-term-project.onrender.com/api/history/list",
-        { withCredentials: true }
+        "http://localhost:3000/api/history/list",
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        }
       );
       setHistory(response.data); // Assuming the response contains the history data
-
     } catch (error) {
       console.error("Error fetching history:", error);
       // Handle error appropriately
     }
   };
+  
 
   useEffect(() => {
     fetchHistory();
@@ -37,11 +42,15 @@ export default function History() {
 
   const addToFavorites = async (searchHistoryId) => {
     try {
+      const token = localStorage.getItem('token');
       await axios.post(
-        "https://se-term-project.onrender.com/api/history/addtofav",
+        "http://localhost:3000/api/history/addtofav",
         { searchHistoryId: searchHistoryId },
-        { withCredentials: true },
-
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        }
       );
       alert('Added to favorites!');
       // Optionally, refresh the data or update the UI to reflect the change
@@ -50,7 +59,7 @@ export default function History() {
       alert('Failed to add to favorites.');
     }
   };
-
+  
   // second <tr> is placeholder used for layout development
 
   return (

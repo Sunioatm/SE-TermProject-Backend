@@ -27,7 +27,7 @@ export default function Register() {
     try {
       if (password === confirmPassword) {
         const response = await axios.post(
-          "https://se-term-project.onrender.com/api/users/register",
+          "http://localhost:3000/api/users/register",
           {
             identifier,
             password,

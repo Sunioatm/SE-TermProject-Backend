@@ -85,10 +85,22 @@ const userLogin = async (req, res) => {
             );
 
             // Set token as a cookie in the response
-            res.cookie('token', token, { httpOnly: true, maxAge: 2 * 60 * 60 * 1000 }); // 2 hours in milliseconds
+            // res.cookie('token', token, { 
+            //     httpOnly: false, 
+            //     sameSite: "None",
+            //     maxAge: 2 * 60 * 60 * 1000, // 2 hours
+            //     path: '/',
+            //     secure: false, // Use only if your site is served over HTTPS
+            //     sameSite: 'None' // Can be 'Lax', 'Strict', or 'None'
+            //   });
+              
+            // res.setHeader('x-auth-token', token);
+            // res.setHeader('Set-Cookie', `token=${token}; HttpOnly; Max-Age=7200; Path=/`);
 
             // Do not send back the password
             const userResponse = { ...user.toObject() };
+            userResponse.token = token
+            // userResponse.token = token
 
             // Not sure what this for.
             // delete userResponse.password;
