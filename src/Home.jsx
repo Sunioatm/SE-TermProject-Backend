@@ -18,7 +18,7 @@ export default function Home() {
   const handleLogout = async () => {
     try {
       // Optional: Call the backend to handle server-side logout logic
-      await axios.post('http://localhost:3000/api/users/logout', {}, {
+      await axios.post('https://se-term-project.onrender.com/api/users/logout', {}, {
         headers: {
           'Authorization': `Bearer ${sessionStorage.getItem('token')}`
         }

@@ -21,7 +21,7 @@ export default function History() {
     try {
       const token = sessionStorage.getItem('token');
       const response = await axios.get(
-        "http://localhost:3000/api/history/list",
+        "https://se-term-project.onrender.com/api/history/list",
         {
           headers: {
             'Authorization': `Bearer ${token}`
@@ -45,7 +45,7 @@ export default function History() {
     try {
       const token = sessionStorage.getItem('token');
       await axios.post(
-        "http://localhost:3000/api/history/addtofav",
+        "https://se-term-project.onrender.com/api/history/addtofav",
         { searchHistoryId: searchHistoryId },
         {
           headers: {

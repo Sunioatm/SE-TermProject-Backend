@@ -24,7 +24,7 @@ export default function Favouriteroute() {
     try {
       const token = sessionStorage.getItem('token');
       const response = await axios.get(
-        "http://localhost:3000/api/favourite/list",
+        "https://se-term-project.onrender.com/api/favourite/list",
         {
           headers: {
             'Authorization': `Bearer ${token}`
@@ -46,7 +46,7 @@ export default function Favouriteroute() {
     try {
       const token = sessionStorage.getItem('token');
       await axios.post(
-        "http://localhost:3000/api/favourite/delete",
+        "https://se-term-project.onrender.com/api/favourite/delete",
         { itemId: itemId },
         {
           headers: {
