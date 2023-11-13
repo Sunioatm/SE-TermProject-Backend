@@ -97,9 +97,12 @@ const userLogin = async (req, res) => {
             // res.setHeader('x-auth-token', token);
             // res.setHeader('Set-Cookie', `token=${token}; HttpOnly; Max-Age=7200; Path=/`);
 
+            // Set the custom header for the token
+            res.setHeader('X-Auth-Token', token);
+
             // Do not send back the password
             const userResponse = { ...user.toObject() };
-            userResponse.token = token
+            // userResponse.token = token
             // userResponse.token = token
 
             // Not sure what this for.

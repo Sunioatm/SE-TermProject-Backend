@@ -22,7 +22,7 @@ export default function Favouriteroute() {
 
   const fetchFavourites = async () => {
     try {
-      const token = localStorage.getItem('token');
+      const token = sessionStorage.getItem('token');
       const response = await axios.get(
         "http://localhost:3000/api/favourite/list",
         {
@@ -44,7 +44,7 @@ export default function Favouriteroute() {
 
   const deleteFavorites = async (itemId) => {
     try {
-      const token = localStorage.getItem('token');
+      const token = sessionStorage.getItem('token');
       await axios.post(
         "http://localhost:3000/api/favourite/delete",
         { itemId: itemId },

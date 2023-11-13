@@ -26,24 +26,22 @@ export default function Login() {
         identifier,
         password,
       });
-
-      // Store the token in localStorage
-      localStorage.setItem('token', response.data.token);
-
+  
+      // Extract the token from the custom header
+      const token = response.headers['x-auth-token'];
+      
+      if (token) {
+        // Store the token in sessionStorage
+        sessionStorage.setItem('token', token);
+      }
+  
       alert('Login successful!');
       navigate('/home');
     } catch (error) {
-      if (error.response) {
-        const errorMessage = error.response.data.message || 'An unknown error occurred';
-        alert(`Login failed: ${errorMessage}`);
-      } else if (error.request) {
-        alert('Login failed: No response from server');
-      } else {
-        alert('Login failed: Error in sending request');
-      }
+      // Handle errors
     }
   };
-
+  
   return (
     <main className={base()}>
       <h1 className={headerText()}>ลงชื่อเข้าใช้</h1>

@@ -19,7 +19,7 @@ export default function History() {
 
   const fetchHistory = async () => {
     try {
-      const token = localStorage.getItem('token');
+      const token = sessionStorage.getItem('token');
       const response = await axios.get(
         "http://localhost:3000/api/history/list",
         {
@@ -35,6 +35,7 @@ export default function History() {
     }
   };
   
+  
 
   useEffect(() => {
     fetchHistory();
@@ -42,7 +43,7 @@ export default function History() {
 
   const addToFavorites = async (searchHistoryId) => {
     try {
-      const token = localStorage.getItem('token');
+      const token = sessionStorage.getItem('token');
       await axios.post(
         "http://localhost:3000/api/history/addtofav",
         { searchHistoryId: searchHistoryId },
@@ -59,6 +60,7 @@ export default function History() {
       alert('Failed to add to favorites.');
     }
   };
+  
   
   // second <tr> is placeholder used for layout development
 

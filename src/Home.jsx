@@ -20,12 +20,12 @@ export default function Home() {
       // Optional: Call the backend to handle server-side logout logic
       await axios.post('http://localhost:3000/api/users/logout', {}, {
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+          'Authorization': `Bearer ${sessionStorage.getItem('token')}`
         }
       });
   
       // Remove the token from localStorage
-      localStorage.removeItem('token');
+      sessionStorage.removeItem('token');
   
       // Navigate to the home page or login page
       navigate('/');
