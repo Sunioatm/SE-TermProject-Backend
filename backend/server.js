@@ -17,7 +17,7 @@ const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cors({
-  origin: 'http://localhost:5173', // Replace with your frontend's origin
+  origin: '*', // Replace with your frontend's origin
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Add other methods as needed
   allowedHeaders: ['Content-Type', 'Authorization'], // Include 'Authorization' here
