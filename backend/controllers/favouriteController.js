@@ -70,9 +70,27 @@ const removeFavorite = async (req, res) => {
     }
 };
 
+const getFavToMap = async (req, res) => {
+    try {
+        const { searchFavouriteId } = req.body;
+
+        // Find the search favourite item
+        const searchFavouriteItem = await SearchHistory.findById(searchFavouriteId);
+        if (!searchFavouriteItem) {
+            return res.status(404).send("Search favourite item not found.");
+        }
+
+        res.status(200).json(searchFavouriteId)
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Internal server error.");
+    }
+};
+
 module.exports = {
     addFavorite,
     listFavorites,
     getFavorite,
     removeFavorite,
+    getFavToMap
 }

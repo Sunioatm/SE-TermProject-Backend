@@ -15,4 +15,7 @@ router.get('/get/:favoriteId', authenticate, FavouriteController.getFavorite);
 // API to remove a favorite item
 router.post('/delete', authenticate, FavouriteController.removeFavorite);
 
+// API to add from favorite to map
+router.post('/tomap', authenticate, FavouriteController.getFavToMap);
+
 module.exports = router;
