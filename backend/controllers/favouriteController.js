@@ -75,7 +75,7 @@ const getFavToMap = async (req, res) => {
         const { searchFavouriteId } = req.body;
 
         // Find the search favourite item
-        const searchFavouriteItem = await SearchHistory.findById(searchFavouriteId);
+        const searchFavouriteItem = await Favourite.findById(searchFavouriteId);
         if (!searchFavouriteItem) {
             return res.status(404).send("Search favourite item not found.");
         }
