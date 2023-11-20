@@ -80,7 +80,7 @@ const getFavToMap = async (req, res) => {
             return res.status(404).send("Search favourite item not found.");
         }
 
-        res.status(200).json(searchFavouriteId)
+        res.status(200).json(searchFavouriteItem)
     } catch (error) {
         console.error(error);
         res.status(500).send("Internal server error.");
